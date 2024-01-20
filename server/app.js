@@ -8,10 +8,8 @@ const cors = require("cors");
 const { NotFoundError } = require("./expressError");
 
 const { authenticateJWT } = require("./middleware/auth");
-const authRoutes = require("./routes/auth");
-const companiesRoutes = require("./routes/companies");
-const usersRoutes = require("./routes/users");
-const jobsRoutes = require("./routes/jobs");
+// const route1Routes = require("./routes/route1");
+// const route2Routes = require("./routes/route2");
 
 const morgan = require("morgan");
 
@@ -25,6 +23,18 @@ app.use(authenticateJWT);
 // app.use("/route1", route1Routes);
 // app.use("/route2", route2Routes);
 // etc
+ //placeholder route for testing
+app.get('/api', (req, res) => {
+    res.json([
+        {
+            "data": {
+                "id": 1,
+                "title": 'Hello from server'
+            }
+        }
+    ]);
+}
+);
 
 
 /** Handle 404 errors -- this matches everything */

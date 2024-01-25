@@ -124,7 +124,8 @@ class User {
     const user = userRes.rows[0];
 
     if (!user) throw new NotFoundError(`No user: ${username}`);
-
+    
+    return user;
   }
 
   /** Update user data with `data`.

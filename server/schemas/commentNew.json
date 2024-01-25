@@ -1,0 +1,33 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "http://example.com/userAuth.json",
+  "type": "object",
+  "properties": {
+    "user_id": {
+      "type": "integer"
+    },
+    "movie_id": {
+      "type": "integer"
+    },
+    "comment": {
+      "type": "string",
+      "limit": 1000,
+      "default": null
+    },
+    "rating": {
+      "type": "integer",
+      "range": [1, 5],
+      "default": null
+    },
+    "favorite": {
+      "type": "boolean",
+      "default": false
+    }
+  },
+  "additionalProperties": false,
+  "required": [
+    "user_id",
+    "movie_id",
+    "favorite"
+  ]
+}

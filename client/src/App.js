@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import { BrowserRouter } from "react-router-dom";
+import NavRoutes from './NavRoutes'
 import CineratorApi from "./api/api";
 import { useJwt as jwt} from "react-jwt";
 
@@ -25,30 +26,29 @@ function App() {
   );
 
 
-  let data
-  async function getData() {
-    try {
-      data = await CineratorApi.getTestData();
-      // setToken(token);
-      // return { success: true };
-      return data;
-    } catch (errors) {
-      console.error("get failed", errors);
-      return { success: false, errors };
-    }
-  }
+  // let data
+  // async function getData() {
+  //   try {
+  //     data = await CineratorApi.getTestData();
+  //     return data;
+  //   } catch (errors) {
+  //     console.error("get failed", errors);
+  //     return { success: false, errors };
+  //   }
+  // }
 
-  useEffect(() => {
-    getData().then(data => {
-      console.log(data)
-      setBackendData(data)
-    })
-  }, []);
+  // useEffect(() => {
+  //   getData().then(data => {
+  //     console.log(data)
+  //     setBackendData(data)
+  //   })
+  // }, []);
 
-  console.log(backendData);
+  // console.log(backendData);
 
   return (
     <BrowserRouter>
+      <NavRoutes />
       <h1>React App</h1>
       {/* {(typeof backendData.data === 'undefined') ? (
         <p>Loading...</p>
@@ -59,7 +59,7 @@ function App() {
           </div>
         ))
       )} */}
-      <h2>{backendData.data}</h2>
+      {/* <h2>{backendData.data}</h2> */}
     </BrowserRouter>
   );
 }

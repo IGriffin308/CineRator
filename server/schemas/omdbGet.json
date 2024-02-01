@@ -1,0 +1,28 @@
+{
+    "$schema": "https://www.omdbapi.com/swagger.json",
+    "title": "OMDB Movie",
+    "description": "A movie from the OMDB API",
+    "type": "object",
+    "properties": {
+        "Title": {
+            "description": "The title of the movie",
+            "type": "string"
+        },
+        "Year": {
+            "description": "The year the movie was released",
+            "type": "string"
+        },
+        "imdbID": {
+            "description": "The IMDB ID of the movie",
+            "type": "string"
+        },
+        "Type": {
+            "description": "The type of movie",
+            "type": "string"
+        },
+        "Poster": {
+            "description": "A link to the movie poster",
+            "type": "string"
+        }
+    }
+}

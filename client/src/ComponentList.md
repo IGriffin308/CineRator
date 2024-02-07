@@ -30,7 +30,7 @@ Helpers
         contains Rate & Fav add/ display component
 
     Movie Block Full component
-        contains Rate & Fav add/ display component
+        Movie Block Short component
         Comment Add component
         Comments display all component
 

@@ -1,17 +1,24 @@
-/user
-    /register
-    /login
-    /get
-    /patch
-    /delete
+/users
+    register /
+    --?authenticate
+    getAll /
+    get    /:username
+    patch  /:username
+    delete /:username
 
 /comments
-    /post
-    /get
-    /patch
-    /delete
+    post   /
+    --getAllForUser /:username
+    --getAllForMovie /:movieID
+    get    /:id
+    patch  /:id
+    delete /:id
 
 /omdb
-    /data/:id
-    /title
-    /img/:id
+    getID  /:id
+    getTitle /:id
+
+
+/auth
+    post /token
+    post /register

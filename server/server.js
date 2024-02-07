@@ -3,6 +3,12 @@
 const app = require("./app");
 const { PORT } = require("./config");
 
-app.listen(PORT, function () {
+// const os = require("os");
+// const hostName = os.hostname();
+// const hostName = "localhost";
+// console.log(`hostName: ${hostName}`);
+
+app.listen(PORT, function (err) {
+  if (err) console.log(err);
   console.log(`Started on http://localhost:${PORT}`);
 });

@@ -96,30 +96,30 @@ class Comments {
     return result.rows;
   }
 
-  // static async update(commentId, data) {
-  //   const { setCols, values } = sqlForPartialUpdate(
-  //     data,
-  //     {
-  //       comment: "comment",
-  //       rating: "rating",
-  //       favorite: "favorite",
-  //     });
-  //   const idVarIdx = "$" + (values.length + 1);
+  static async update(commentId, data) {
+    const { setCols, values } = sqlForPartialUpdate(
+      data,
+      {
+        comment: "comment",
+        rating: "rating",
+        favorite: "favorite",
+      });
+    const idVarIdx = "$" + (values.length + 1);
 
-  //   const querySql = `UPDATE comments
-  //                     SET ${setCols}
-  //                     WHERE id = ${idVarIdx}
-  //                     RETURNING id,
-  //                               comment,
-  //                               rating,
-  //                               favorite`;
-  //   const result = await db.query(querySql, [...values, commentId]);
-  //   const comment = result.rows[0];
+    const querySql = `UPDATE comments
+                      SET ${setCols}
+                      WHERE id = ${idVarIdx}
+                      RETURNING id,
+                                comment,
+                                rating,
+                                favorite`;
+    const result = await db.query(querySql, [...values, commentId]);
+    const comment = result.rows[0];
 
-  //   if (!comment) throw new NotFoundError(`No comment: ${commentId}`);
+    if (!comment) throw new NotFoundError(`No comment: ${commentId}`);
 
-  //   return comment;
-  // }
+    return comment;
+  }
 
   static async remove(commentId) {
     const result = await db.query(

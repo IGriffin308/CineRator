@@ -38,6 +38,10 @@ class Omdb {
         }
         return omdbImgRes.data;
     }
+
+    static async returnLoremIpsum() {
+        return {"Lorem ipsum": "dolor sit amet"};
+    }
 }
 
 module.exports = Omdb;

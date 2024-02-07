@@ -34,9 +34,35 @@ class CineratorApi {
 
   // Individual API routes
 
-  static async getTestData() {
-    let res = await this.request(`api`);
-    return res.data;
+  // static async getTestData() {
+  //   let res = await this.request(`api`);
+  //   return res.data;
+  // }
+
+    /** Get the current user. */
+
+  static async getCurrentUser(username) {
+    let res = await this.request(`users/${username}`);
+    return res.user;
+  }
+
+  static async login(data) {
+    let res = await this.request(`auth/token`, data, "post");
+    return res.token;
+  }
+
+  /** Signup for site. */
+
+  static async signup(data) {
+    let res = await this.request(`auth/register`, data, "post");
+    return res.token;
+  }
+
+  /** Save user profile page. */
+
+  static async saveProfile(username, data) {
+    let res = await this.request(`users/${username}`, data, "patch");
+    return res.user;
   }
 }
 

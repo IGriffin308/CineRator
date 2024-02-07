@@ -13,7 +13,7 @@ const { BCRYPT_WORK_FACTOR } = require("../config.js");
 
 /** Related functions for users. */
 
-class User {
+class Users {
   /** authenticate user with username, password.
    *
    * Returns { username, is_admin }
@@ -54,7 +54,7 @@ class User {
    **/
 
   static async register(
-      { username, password, isAdmin }) {
+      { username, password, isAdmin=false }) {
     const duplicateCheck = await db.query(
           `SELECT username
            FROM users
@@ -113,11 +113,11 @@ class User {
 
   static async get(username) {
     const userRes = await db.query(
-          `SELECT id,
-                  username,
+          `SELECT username,
+                  id,
                   is_admin AS "isAdmin"
            FROM users
-           WHERE username = $2`,
+           WHERE username = $1`,
         [username],
     );
 
@@ -189,4 +189,4 @@ class User {
 }
 
 
-module.exports = User;
+module.exports = Users;

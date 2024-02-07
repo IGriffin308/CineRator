@@ -9,14 +9,14 @@ const { ensureCorrectUserOrAdmin, ensureAdmin } = require("../middleware/auth");
 const { BadRequestError } = require("../expressError");
 const Comments = require("../models/comments");
 const { createToken } = require("../helpers/tokens");
-const userNewSchema = require("../schemas/userNew.json");
-const userUpdateSchema = require("../schemas/userUpdate.json");
+const commentNewSchema = require("../schemas/commentNew.json");
+const commentUpdateSchema = require("../schemas/commentUpdate.json");
 
 const router = express.Router();
 
 router.post("/", ensureAdmin, async function (req, res, next) {
   try {
-    const validator = jsonschema.validate(req.body, userNewSchema);
+    const validator = jsonschema.validate(req.body, commentNewSchema);
     if (!validator.valid) {
       const errs = validator.errors.map(e => e.stack);
       throw new BadRequestError(errs);
@@ -41,9 +41,27 @@ router.get("/:id", ensureCorrectUserOrAdmin, async function (req, res, next) {
 }
 );
 
+router.get("/:username", ensureAdmin, async function (req, res, next) {
+  try {
+    const comments = await Comments.getAllForUser(req.params.username);
+    return res.json({ comments });
+  } catch (err) {
+    return next(err);
+  }
+});
+
+router.get("/:movieId", ensureAdmin, async function (req, res, next) {
+  try {
+    const comments = await Comments.getAllForMovie(req.params.movieId);
+    return res.json({ comments });
+  } catch (err) {
+    return next(err);
+  }
+});
+
 router.patch("/:id", ensureCorrectUserOrAdmin, async function (req, res, next) {
   try {
-    const validator = jsonschema.validate(req.body, userUpdateSchema);
+    const validator = jsonschema.validate(req.body, commentUpdateSchema);
     if (!validator.valid) {
       const errs = validator.errors.map(e => e.stack);
       throw new BadRequestError(errs);

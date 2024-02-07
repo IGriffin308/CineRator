@@ -1,29 +1,42 @@
 import React from 'react';
-import { Route, BrowserRouter, Link } from 'react-router-dom';
-import Homepage from './Homepage';
-import Searchpage from './Searchpage';
-import Userpage from './Userpage';
+import { Switch, Route, Redirect } from 'react-router-dom';
+import Homepage from '../componentsRouter/Homepage';
+import LoginSignupPage from '../componentsRouter/LoginSignupPage';
+import MoviePage from '../componentsRouter/MoviePage';
+import Searchpage from '../componentsRouter/Searchpage';
+import UserPage from '../componentsRouter/UserPage';
 import "./NavRoutes.css"
 
 
-function NavRoutes() {
-  	return (
-		<div>
-			<Homepage />
-			<div id="nav">
+function NavRoutes({ login, signup }) {
+	return (
+		<div className="pt-5">
+			<Switch>
+
 				<Route exact path="/">
-					<Link to="/search">Search</Link><br />
-      		<Link to="/userpage">Userpage</Link><br />
+					<Homepage />
 				</Route>
-			</div>
-        <Route exact path="/search">
+
+				<Route exact path="/login-signup">
+					<LoginSignupPage login={login} signup={signup}/>
+				</Route>
+
+				<Route exact path="/movie">
+					<MoviePage />
+				</Route>
+
+				<Route exact path="/search">
 					<Searchpage />
-    		</Route>
-        <Route exact path="/userpage">
-					<Userpage />
-    		</Route>
+				</Route>
+
+				<Route exact path="/userpage">
+					<UserPage />
+				</Route>
+
+				<Redirect to="/" />
+			</Switch>
 		</div>
-  	);
+	);
 }
 
 export default NavRoutes;

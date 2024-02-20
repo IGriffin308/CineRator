@@ -1,8 +1,7 @@
 import React from 'react';
 import LoginForm from '../auth/LoginForm';
-import SignupForm from '../auth/SignupForm';
 
-function LoginSignupPage({ login, signup }) {
+function LoginSignupPage({ login }) {
   console.debug(
     "Routes",
     `login=${typeof login}`,
@@ -12,7 +11,6 @@ function LoginSignupPage({ login, signup }) {
     <div>
       <h1>LoginSignupPage</h1>
       <LoginForm login={login}/>
-      <SignupForm signup={signup}/>
     </div>
   );
 }

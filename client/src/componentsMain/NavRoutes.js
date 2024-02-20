@@ -1,14 +1,22 @@
 import React from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route, Redirect, useLocation } from 'react-router-dom';
 import Homepage from '../componentsRouter/Homepage';
-import LoginSignupPage from '../componentsRouter/LoginSignupPage';
+import LoginPage from '../componentsRouter/LoginPage';
+import SignupPage from '../componentsRouter/SignupPage';
 import MoviePage from '../componentsRouter/MoviePage';
 import Searchpage from '../componentsRouter/Searchpage';
 import UserPage from '../componentsRouter/UserPage';
 import "./NavRoutes.css"
 
+function useQuery() {
+	const { search } = useLocation();
+  
+	return React.useMemo(() => new URLSearchParams(search), [search]);
+}
+
 
 function NavRoutes({ login, signup }) {
+	let query = useQuery();
 	return (
 		<div className="pt-5">
 			<Switch>
@@ -17,16 +25,20 @@ function NavRoutes({ login, signup }) {
 					<Homepage />
 				</Route>
 
-				<Route exact path="/login-signup">
-					<LoginSignupPage login={login} signup={signup}/>
+				<Route exact path="/login">
+					<LoginPage login={login} />
 				</Route>
 
-				<Route exact path="/movie">
-					<MoviePage />
+				<Route exact path="/signup">
+					<SignupPage signup={signup} />
+				</Route>
+
+				<Route path="/movie">
+					<MoviePage title={query.get("title")}/>
 				</Route>
 
 				<Route exact path="/search">
-					<Searchpage />
+					<Searchpage title={query.get("title")}/>
 				</Route>
 
 				<Route exact path="/userpage">

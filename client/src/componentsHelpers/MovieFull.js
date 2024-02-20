@@ -4,13 +4,13 @@ import CommentAdd from './CommentAdd';
 import CommentsShow from './CommentsShow';
 
 
-function MovieFull() {
+function MovieFull({ title }) {
   return (
     <div className="container">
-      <MoviePlaque />
+      <MoviePlaque title={ title }/>
       <div className="container border border-dark rounded">
-        <CommentAdd />
-        <CommentsShow />
+        <CommentAdd title={title}/>
+        <CommentsShow title={title}/>
       </div>
     </div>
   );

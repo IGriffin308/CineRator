@@ -34,35 +34,99 @@ class CineratorApi {
 
   // Individual API routes
 
-  // static async getTestData() {
-  //   let res = await this.request(`api`);
-  //   return res.data;
-  // }
+  /** User Section */
 
-    /** Get the current user. */
-
+  /** Get the current user. */
   static async getCurrentUser(username) {
     let res = await this.request(`users/${username}`);
     return res.user;
   }
 
+  /** Login user. */
   static async login(data) {
     let res = await this.request(`auth/token`, data, "post");
     return res.token;
   }
 
   /** Signup for site. */
-
   static async signup(data) {
     let res = await this.request(`auth/register`, data, "post");
     return res.token;
   }
 
   /** Save user profile page. */
-
   static async saveProfile(username, data) {
     let res = await this.request(`users/${username}`, data, "patch");
     return res.user;
+  }
+
+/** ---------------------- */
+  /** Movies section */
+
+  /** Get all movies. */
+  static async getMovieById(id) {
+    let res = await this.request(`omdb/id/${id}`);
+    return res.omdbRes;
+  }
+
+  static async getMovieByTitle(title) {
+    if (sessionStorage.getItem(title)) {
+      console.log("from session storage");
+      return JSON.parse(sessionStorage.getItem(title));
+    } else {
+      let res = await this.request(`omdb/title/${title}`);
+      sessionStorage.setItem(title, JSON.stringify(res.omdbRes));
+      console.log("from api");
+      return res.omdbRes;
+    }
+  }
+
+  static async getLoremIpsum() {
+    let res = await this.request(`omdb/lorem`);
+    console.log(res);
+    return res.omdbRes;
+  }
+
+
+  /** ---------------------- */
+  /** Comments section */
+
+  /** Get comments by title. */
+  static async getCommentsByTitle(title) {
+    let res = await this.request(`comments/${title}`);
+    return res.comments;
+  }
+
+  /** Add a comment. */
+  static async addComment(data) {
+    let res = await this.request(`comments`, data, "post");
+    console.log("sending:", res);
+    return res.comment;
+  }
+
+  /** Edit a comment. */
+  static async editComment(id, data) {
+    let res = await this.request(`comments/${id}`, data, "patch");
+    return res.comment;
+  }
+
+  /** Delete a comment. */
+  static async deleteComment(id) {
+    let res = await this.request(`comments/${id}`, {}, "delete");
+    return res;
+  }
+
+  /** Check if comment exists. */
+  static async checkIfCommentExists(userId, movieId) {
+    let res = await this.request(`comments/${userId}/${movieId}`);
+    try {
+      if (res.exists === false) {
+        return false;
+      }
+      return res;
+    } catch (err) {
+      console.log("error:", err);
+    }
   }
 }
 

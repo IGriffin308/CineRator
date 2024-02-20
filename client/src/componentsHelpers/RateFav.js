@@ -1,7 +1,7 @@
 import React from 'react';
 import './RateFav.css';
 
-function RateFav() {
+function RateFav({ title }) {
   return (
     <div className="container border border-dark rounded">
       <span className="fav">

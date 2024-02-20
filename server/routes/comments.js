@@ -24,6 +24,7 @@ router.post("/", ensureAdmin, async function (req, res, next) {
 
     const comment = await Comments.post(req.body);
     const token = createToken(comment);
+    console.log("comment", comment);
     return res.status(201).json({ comment, token });
   } catch (err) {
     return next(err);
@@ -84,5 +85,18 @@ router.delete("/:id", ensureCorrectUserOrAdmin, async function (req, res, next) 
   }
 }
 );
+
+router.get("/check/:userId/:movieId", ensureCorrectUserOrAdmin, async function (req, res, next) {
+  try {
+    const commentId = await Comments.checkIfCommentExists(req.params.userId, req.params.movieId);
+    if (commentId.length === 0) {
+      return res.json({ "exists": false });
+    } else {
+      return res.json({ "exists": true, "comments": commentId});
+    }
+  } catch (err) {
+    return next(err);
+  }
+});
 
 module.exports = router;

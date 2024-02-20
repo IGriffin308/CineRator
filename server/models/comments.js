@@ -132,6 +132,16 @@ class Comments {
 
     if (!comment) throw new NotFoundError(`No comment: ${commentId}`);
   }
+
+  static async checkIfCommentExists(userId, movieId) {
+    const result = await db.query(
+      `SELECT id
+       FROM comments
+       WHERE user_id = $1 AND movie_id = $2`,
+      [userId, movieId]
+    );
+    return result.rows[0];
+  }
 }
 
 module.exports = Comments;

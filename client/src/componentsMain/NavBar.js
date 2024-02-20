@@ -1,7 +1,8 @@
 import React, { useContext } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import UserContext from "../auth/UserContext";
 import "./NavBar.css";
+import SearchBar from '../componentsHelpers/SearchBar';
 
 /** Navigation bar for site. Shows up on every page.
  *
@@ -27,13 +28,16 @@ function NavBar({ logout }) {
           </span>
           <ul className="navbar-nav mr-auto mt-2 mt-lg-0 list-group list-group-horizontal">
             <li className="list-group-item">
-              <NavLink to="/movie">Movie</NavLink>
+              <NavLink to="/movie?title=testmovie1">Movie</NavLink>
             </li>
             <li className="list-group-item">
-              <NavLink to="/userpage">User Page</NavLink>
+              <SearchBar />
             </li>
             <li className="list-group-item">
               <NavLink to="/search">Search</NavLink>
+            </li>
+            <li className="list-group-item">
+              <NavLink to="/userpage">User Page</NavLink>
             </li>
             <li className="list-group-item">
               <Link to="/" onClick={logout}>
@@ -58,13 +62,19 @@ function NavBar({ logout }) {
           </span>
           <ul className="navbar-nav mr-auto mt-2 mt-lg-0 list-group list-group-horizontal">
             <li className="list-group-item">
-              <NavLink to="/movie">Movie</NavLink>
+              <NavLink to="/movie?title=testmovie1">Movie</NavLink>
+            </li>
+            <li className="list-group-item">
+              <SearchBar />
             </li>
             <li className="list-group-item">
               <NavLink to="/search">Search</NavLink>
             </li>
             <li className="list-group-item">
-              <NavLink to="/login-signup">Login/Signup</NavLink>
+              <NavLink to="/login">Login</NavLink>
+            </li>
+            <li className="list-group-item">
+              <NavLink to="/signup">Sign Up</NavLink>
             </li>
           </ul>
         </nav>

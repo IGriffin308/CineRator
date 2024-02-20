@@ -12,6 +12,83 @@
             "description": "The year the movie was released",
             "type": "string"
         },
+        "Rated": {
+            "description": "The rating of the movie",
+            "type": "string"
+        },
+        "Released": {
+            "description": "The release date of the movie",
+            "type": "string"
+        },
+        "Runtime": {
+            "description": "The runtime of the movie",
+            "type": "string"
+        },
+        "Genre": {
+            "description": "The genre of the movie",
+            "type": "string"
+        },
+        "Director": {
+            "description": "The director of the movie",
+            "type": "string"
+        },
+        "Writer": {
+            "description": "The writer of the movie",
+            "type": "string"
+        },
+        "Actors": {
+            "description": "The actors in the movie",
+            "type": "string"
+        },
+        "Plot": {
+            "description": "The plot of the movie",
+            "type": "string"
+        },
+        "Language": {
+            "description": "The language of the movie",
+            "type": "string"
+        },
+        "Country": {
+            "description": "The country the movie was made in",
+            "type": "string"
+        },
+        "Awards": {
+            "description": "The awards the movie has won",
+            "type": "string"
+        },
+        "Poster": {
+            "description": "The URL of the movie's poster",
+            "type": "string"
+        },
+        "Ratings": {
+            "description": "The ratings of the movie",
+            "type": "array",
+            "items": {
+                "type": "object",
+                "properties": {
+                    "Source": {
+                        "description": "The source of the rating",
+                        "type": "string"
+                    },
+                    "Value": {
+                        "description": "The value of the rating",
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "Metascore": {
+            "description": "The metascore of the movie",
+            "type": "string"
+        },
+        "imdbRating": {
+            "description": "The IMDB rating of the movie",
+            "type": "string"
+        },
+        "imdbVotes": {
+            "description": "The number of IMDB votes the movie has",
+            "type": "string"
+        },
         "imdbID": {
             "description": "The IMDB ID of the movie",
             "type": "string"
@@ -20,8 +97,24 @@
             "description": "The type of movie",
             "type": "string"
         },
-        "Poster": {
-            "description": "A link to the movie poster",
+        "DVD": {
+            "description": "The date the movie was released on DVD",
+            "type": "string"
+        },
+        "BoxOffice": {
+            "description": "The box office earnings of the movie",
+            "type": "string"
+        },
+        "Production": {
+            "description": "The production company of the movie",
+            "type": "string"
+        },
+        "Website": {
+            "description": "The website of the movie",
+            "type": "string"
+        },
+        "Response": {
+            "description": "The response of the API",
             "type": "string"
         }
     }

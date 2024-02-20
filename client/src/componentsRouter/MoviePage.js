@@ -1,10 +1,13 @@
 import React from 'react';
 import MovieFull from '../componentsHelpers/MovieFull';
+import MoviePlaque from '../componentsHelpers/MoviePlaque';
 
-function MoviePage() {
+function MoviePage({ title }) {
+
   return (
     <div>
-      <MovieFull />
+      <h1>Movie Page</h1>
+      <h2>{title}</h2>
     </div>
   );
 }  

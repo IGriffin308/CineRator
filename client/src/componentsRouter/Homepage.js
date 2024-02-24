@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import "./Homepage.css";
 import UserContext from "../auth/UserContext";
 
+/** Homepage of site. Show welcome message or login/register buttons. */
 function Homepage() {
   const { currentUser } = useContext(UserContext);
   console.debug("Homepage", "currentUser=", currentUser);
@@ -12,6 +13,7 @@ function Homepage() {
         <div className="container text-center">
           <h1 className="mb-4 font-weight-bold">CineRator</h1>
           <p className="lead">All the movies in one convenient place.</p>
+          <p>Please remember to remain respectful in the comments!</p>
           {currentUser
               ? <h2>
                 Welcome Back, {currentUser.username}!
@@ -19,8 +21,12 @@ function Homepage() {
               : (
                   <p>
                     <Link className="btn btn-primary font-weight-bold mr-3"
-                          to="/login-signup">
-                      Log in / Sign up
+                          to="/login">
+                      Log in
+                    </Link>
+                    <Link className="btn btn-primary font-weight-bold"
+                          to="/signup">
+                      Sign up
                     </Link>
                   </p>
               )}

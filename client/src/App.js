@@ -35,8 +35,6 @@ function App() {
   const [infoLoaded, setInfoLoaded] = useState(false);
   const [currentUser, setCurrentUser] = useState(null);
   const [token, setToken] = useLocalStorage(TOKEN_STORAGE_ID);
-  const [applicationIds, setApplicationIds] = useState(new Set());
-  const [backendData, setBackendData] = useState([{}]);
 
   console.debug(
       "App",
@@ -60,7 +58,6 @@ function App() {
           CineratorApi.token = token;
           let currentUser = await CineratorApi.getCurrentUser(username);
           setCurrentUser(currentUser);
-          setApplicationIds(new Set(currentUser.applications));
         } catch (err) {
           console.error("App loadUserInfo: problem loading", err);
           setCurrentUser(null);

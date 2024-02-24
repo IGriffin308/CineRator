@@ -63,37 +63,66 @@ class CineratorApi {
 /** ---------------------- */
   /** Movies section */
 
-  /** Get all movies. */
+  /** Get movie by ID.
+   * Use session storage to store and retrieve movie data.
+   * If movie is not in session storage, get it from the API.
+   * This will prevent unnecessary 3rd party API calls.
+   */
   static async getMovieById(id) {
-    let res = await this.request(`omdb/id/${id}`);
-    return res.omdbRes;
-  }
-
-  static async getMovieByTitle(title) {
-    if (sessionStorage.getItem(title)) {
-      console.log("from session storage");
-      return JSON.parse(sessionStorage.getItem(title));
+    if (sessionStorage.getItem(id)) {
+      console.log("movie loaded by ID from session storage");
+      return JSON.parse(sessionStorage.getItem(id));
     } else {
-      let res = await this.request(`omdb/title/${title}`);
-      sessionStorage.setItem(title, JSON.stringify(res.omdbRes));
-      console.log("from api");
+      let res = await this.request(`omdb/id/${id}`);
+      sessionStorage.setItem(id, JSON.stringify(res.omdbRes));
+      console.log("movie loaded by ID from api");
       return res.omdbRes;
     }
   }
 
-  static async getLoremIpsum() {
-    let res = await this.request(`omdb/lorem`);
-    console.log(res);
-    return res.omdbRes;
+  // static async getMovieByTitle(title) {
+  //   if (sessionStorage.getItem(title)) {
+  //     console.log("movie loaded by title from session storage");
+  //     return JSON.parse(sessionStorage.getItem(title));
+  //   } else {
+  //     let res = await this.request(`omdb/title/${title}`);
+  //     sessionStorage.setItem(title, JSON.stringify(res.omdbRes));
+  //     console.log("movie loaded by title from from api");
+  //     return res.omdbRes;
+  //   }
+  // }
+
+  /** Get list of movies by search term.
+   * Use session storage to store and retrieve list of results.
+   * If result is not in session storage, get it from the API.
+   * This will prevent unnecessary 3rd party API calls.
+   */
+  static async getMovieBySearch(title) {
+    if (sessionStorage.getItem(title)) {
+      console.log("movie loaded by search from session storage");
+      return JSON.parse(sessionStorage.getItem(title));
+    } else {
+      let res = await this.request(`omdb/search/${title}`);
+      sessionStorage.setItem(title, JSON.stringify(res.omdbRes));
+      console.log("movie loaded by search from from api");
+      return res.omdbRes;
+    }
   }
+
+  // static async getLoremIpsum() {
+  //   let res = await this.request(`omdb/lorem`);
+  //   console.log(res);
+  //   return res.omdbRes;
+  // }
 
 
   /** ---------------------- */
   /** Comments section */
 
-  /** Get comments by title. */
-  static async getCommentsByTitle(title) {
-    let res = await this.request(`comments/${title}`);
+  /** Get comments by movie id. */
+  static async getCommentsByMovie(id) {
+    let res = await this.request(`comments/movie/${id}`);
+    console.log("res.comments", res);
     return res.comments;
   }
 
@@ -101,13 +130,13 @@ class CineratorApi {
   static async addComment(data) {
     let res = await this.request(`comments`, data, "post");
     console.log("sending:", res);
-    return res.comment;
+    return res.data;
   }
 
   /** Edit a comment. */
   static async editComment(id, data) {
     let res = await this.request(`comments/${id}`, data, "patch");
-    return res.comment;
+    return res.data;
   }
 
   /** Delete a comment. */
@@ -119,6 +148,69 @@ class CineratorApi {
   /** Check if comment exists. */
   static async checkIfCommentExists(userId, movieId) {
     let res = await this.request(`comments/${userId}/${movieId}`);
+    try {
+      if (res.exists === false) {
+        return false;
+      }
+      return res;
+    } catch (err) {
+      console.log("error:", err);
+    }
+  }
+
+
+  /** ---------------------- */
+  /** Favorites section
+   * Favorites and Ratings are stored in the same table.
+   * Each user can only have one favorite and rating value per movie.
+   */
+
+  /** Get all favorites and ratings for a user. */
+  static async getFavoritesByUser(userId) {
+    let res = await this.request(`favorites/${userId}`);
+    return res.favorites;
+  }
+
+  /** Get all favorites and ratings for a movie. */
+  static async getFavoritesByMovie(movieId) {
+    let res = await this.request(`favorites/${movieId}`);
+    return res.favorites;
+  }
+
+  static async getFavorite(userId, movieId) {
+    let res = await this.request(`favorites/${userId}/${movieId}`);
+    console.log("res.favorite", res.favorite);
+    return res.favorite;
+  }
+
+  /** Add a new favorite and rating entry for a specific user on a specific movie. 
+   * This should only occur if the user has not already have an entry for the movie.
+  */
+  static async addFavorite(data) {
+    let res = await this.request(`favorites`, data, "post");
+    console.log("sending to favorite:", data);
+    return res.favorite;
+  }
+
+  /** Edit an existing favorite and rating entry for a specific user on a specific movie
+   * This should only occur if the user already has an entry for the movie.
+   */
+  static async editFavorite(userId, movieId, data) {
+    let res = await this.request(`favorites/${userId}/${movieId}`, data, "patch");
+    return res.favorite;
+  }
+
+  /** Delete a favorite. */
+  static async deleteFavorite(userId, movieId) {
+    let res = await this.request(`favorites/${userId}/${movieId}`, {}, "delete");
+    return res;
+  }
+
+  /** Check if favorite exists.
+   * This may be useful in determine if a user already has an entry a movie.
+   */
+  static async checkIfFavoriteExists(userId, movieId) {
+    let res = await this.request(`favorites/check/${userId}/${movieId}`);
     try {
       if (res.exists === false) {
         return false;

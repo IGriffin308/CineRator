@@ -1,31 +1,51 @@
 import React from 'react';
-import testmovie1 from "../testmovie1";
-import sampleComments from "../testcomments1";
+import { useState, useEffect } from 'react';
 import CineratorApi from "../api/api";
+import Alert from "../common/Alert";
+import LoadingSpinner from "../common/LoadingSpinner";
 
-function CommentsShow({ title }) {
+/** Show all comments for Movie */
 
-  let movieArr = Object.values(testmovie1);
+function CommentsShow({ movieId }) {
+  const [comments, setComments] = useState([]);
+  const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
-  let comments
-  async function getComments() {
-    comments = await CineratorApi.getCommentsByTitle(movieArr[0]);
+
+  useEffect(() => {
+    async function getComments(movieId) {
+      try {
+        let res = await CineratorApi.getCommentsByMovie(movieId);
+        setComments(res);
+        setIsLoading(false);
+      } catch (errors) {  
+        setError(errors);
+        setIsLoading(false);
+        return { success: false, errors };
+      }
+    }
+    getComments(movieId);
     console.log(comments);
-  }
-  getComments();
+  }, [movieId]);
+  
 
+  if (isLoading) {
+    return (<LoadingSpinner />);
+  }
+  if (error) {
+    return (<Alert type="danger" messages={error} />);
+  }
   return (
     <div>
       <h3>Comments</h3>
         <div>
-            {sampleComments.comments.map((comment) => (
+            {comments.map((comment) => (
             <div 
 							key={comment.id} 
 							className="container border border-dark rounded"
 							style={{margin: '10px', padding: '10px', background: 'rgba(255,255,255,0.5)'}}
 						>
 								<h4>{comment.username}</h4>
-								<p>{comment.rating}</p>
                 <p>{comment.comment}</p>
             </div>
             ))}

@@ -3,44 +3,34 @@
 const db = require("../db");
 const bcrypt = require("bcrypt");
 const { sqlForPartialUpdate } = require("../helpers/sql");
-const {
-  NotFoundError,
-  BadRequestError,
-  UnauthorizedError,
-} = require("../expressError");
+const {NotFoundError} = require("../expressError");
 
 const { BCRYPT_WORK_FACTOR } = require("../config.js");
 
+/** SQL functions for comments. */
 class Comments {
-    /** authenticate user with username, password.
-     *
-     * Returns { username, is_admin }
-     *
-     * Throws UnauthorizedError is user not found or wrong password.
-     **/
 
   static async post({
     user_id,
     movie_id,
+    username,
     comment = null,
-    rating = null,
-    favorite = false,
   }) {
     const result = await db.query(
       `INSERT INTO comments
-        (user_id, movie_id, comment, rating, favorite)
-        VALUES ($1, $2, $3, $4, $5)
-        RETURNING id, comment, rating, favorite`,
+        (user_id, movie_id, username, comment)
+        VALUES ($1, $2, $3, $4)
+        RETURNING id, comment`,
       [
         user_id,
         movie_id,
+        username,
         comment,
-        rating,
-        favorite,
       ],
     );
     const commentData = result.rows[0];
-
+    
+    console.log("commentData", commentData);
     return commentData;
   }
 
@@ -48,8 +38,7 @@ class Comments {
     const commentsRes = await db.query(
       `SELECT id,
               comment,
-              rating,
-              favorite
+              username,
          FROM comments
          WHERE id = $1`,
         [commentId],
@@ -62,14 +51,14 @@ class Comments {
     return comment;
   }
 
+
   static async getAllForMovie(movieId) {
     const result = await db.query(
       `SELECT id,
-              ucer_id,
+              user_id,
               movie_id,
-              comment,
-              rating,
-              favorite
+              username,
+              comment
        FROM comments
        WHERE movie_id = $1
        ORDER BY id`,
@@ -84,9 +73,8 @@ class Comments {
       `SELECT id,
               user_id,
               movie_id,
+              username,
               comment,
-              rating,
-              favorite
        FROM comments
        WHERE user_id = $1
        ORDER BY id`,
@@ -100,9 +88,7 @@ class Comments {
     const { setCols, values } = sqlForPartialUpdate(
       data,
       {
-        comment: "comment",
-        rating: "rating",
-        favorite: "favorite",
+        comment: "comment"
       });
     const idVarIdx = "$" + (values.length + 1);
 
@@ -110,9 +96,7 @@ class Comments {
                       SET ${setCols}
                       WHERE id = ${idVarIdx}
                       RETURNING id,
-                                comment,
-                                rating,
-                                favorite`;
+                                comment`;
     const result = await db.query(querySql, [...values, commentId]);
     const comment = result.rows[0];
 

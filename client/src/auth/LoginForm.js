@@ -81,17 +81,6 @@ function LoginForm({ login }) {
                       required
                   />
                 </div>
-{/* delete after dev */}
-                {/* <div>
-                  <label>is Admin? DELETE AFTER DEV</label>
-                  <input
-                      type="boolean"
-                      name="is_admin"
-                      value={formData.is_admin}
-                      onChange={handleChange}
-                  />
-                </div> */}
-{/* close delete after dev */}
 
                 {formErrors.length
                     ? <Alert type="danger" messages={formErrors} />

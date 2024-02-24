@@ -1,22 +1,25 @@
 "use strict";
 
-/** Routes for users. */
+/** Routes for omdb api. */
 
 const express = require("express");
 const jsonschema = require("jsonschema");
+const axios = require("axios");
 const {
     NotFoundError,
     BadRequestError,
     UnauthorizedError,
 } = require("../expressError");
 
-const OMDB_API_KEY = process.env.OMDB_API_KEY;
+// const OMDB_API_KEY = process.env.API_KEY;
+const OMDB_API_KEY = "d4981fd1";
 const OMDB_API_URL = `http://www.omdbapi.com/?apikey=${OMDB_API_KEY}&`;
-const OMDB_IMG_URL = `http://img.omdbapi.com/?apikey=${OMDB_API_KEY}&`;
+// const OMDB_IMG_URL = `http://img.omdbapi.com/?apikey=${OMDB_API_KEY}&`;
 
 class Omdb {
-    static async get(id) {
+    static async getById(id) {
         const omdbRes = await axios.get(`${OMDB_API_URL}i=${id}`);
+        console.log("requesting omdb");
         if (omdbRes.data.Response === "False") {
             throw new NotFoundError(`No movie: ${id}`);
         }
@@ -25,22 +28,25 @@ class Omdb {
 
     static async getByTitle(title) {
         const omdbRes = await axios.get(`${OMDB_API_URL}t=${title}`);
+        console.log("requesting omdb");
         if (omdbRes.data.Response === "False") {
             throw new NotFoundError(`No movie: ${title}`);
         }
         return omdbRes.data;
     }
 
-    static async getImg(id) {
-        const omdbImgRes = await axios.get(`${OMDB_IMG_URL}i=${id}`);
-        if (omdbImgRes.data.Response === "False") {
-            throw new NotFoundError(`No movie: ${id}`);
+    static async getBySearch(title) {
+        const omdbRes = await axios.get(`${OMDB_API_URL}s=${title}`);
+        console.log("requesting omdb");
+        if (omdbRes.data.Response === "False") {
+            throw new NotFoundError(`No movie: ${title}`);
         }
-        return omdbImgRes.data;
+        return omdbRes.data;
     }
 
     static async returnLoremIpsum() {
-        return {"Lorem ipsum": "dolor sit amet"};
+        const omdbRes = {"Lorem ipsum": "dolor sit amet"};
+        return omdbRes;
     }
 }
 

@@ -1,62 +1,32 @@
 import React from 'react';
 import { useState, useEffect, useContext } from 'react';
+import { useHistory } from 'react-router-dom';
 import CineratorApi from '../api/api';
 import testmovie1 from "../testmovie1";
+import UserContext from "../auth/UserContext";
 
-function CommentAdd({ title }) {
+/** Form to add comment to movie */
+
+function CommentAdd({ movieId }) {
   const [comment, setComment] = useState("");
-  const [movieId, setMovieId] = useState(0);
-  const [exists, setExists] = useState(false);
-  const [commentId, setCommentId] = useState(0);
   const { currentUser } = useContext(UserContext);
+  const history = useHistory();
 
   const handleChange = (e) => {
     setComment(e.target.value);
   }
 
-  // let movieArr = Object.values(testmovie1);
-  let movieArr
-
-  useEffect(( title ) => {
-    const getMovie = async () => {
-      let res = await CineratorApi.getMovieByTitle(title);
-      setMovieId(res.id);
-      movieArr = Object.values(res);
-      if (res) {
-        let existRes = await CineratorApi.checkIfCommentExists(currentUser.id, res.id)
-        setExists(existRes.exists);
-        if (existRes.exists) {
-          console.log("Comment exists");
-          setCommentId(existRes.commentId);
-        }
-      }
-    }
-    getMovie();
-  }, [title]);
-
+  // Submit form and reload page
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (exists) {
-      console.log("exists");
-      CineratorApi.editComment(
-        commentId,
-        data = {
-          comment: comment,
-        });
+    let data = {
+      user_id: currentUser.id,
+      movie_id: movieId,
+      username: currentUser.username,
+      comment: comment,
     }
-    CineratorApi.addComment(
-      // [ movieArr[18], comment ]
-      id = movieId,
-      data = {
-        // 1, // user_id
-        user_id: currentUser.id, // user_id
-        // movieArr[18], // movie_id
-        movie_id: movieId, // movie_id
-        comment: comment, // comment
-        // null, // rating
-        // false, // favorite
-      });
-    console.log(comment);
+    CineratorApi.addComment(data);
+    history.go(0);
   }
 
   return (
@@ -67,8 +37,9 @@ function CommentAdd({ title }) {
           <label>
             <textarea 
               name="comment" 
-              cols="40" 
+              cols="36" 
               rows="5" 
+              maxlength="500"
               placeholder="Add Comment" 
               value={comment} 
               onChange={handleChange} />

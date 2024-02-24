@@ -8,13 +8,14 @@ import Searchpage from '../componentsRouter/Searchpage';
 import UserPage from '../componentsRouter/UserPage';
 import "./NavRoutes.css"
 
+// Custom hook to get query params from URL
 function useQuery() {
 	const { search } = useLocation();
   
 	return React.useMemo(() => new URLSearchParams(search), [search]);
 }
 
-
+// Routes for the main navigation
 function NavRoutes({ login, signup }) {
 	let query = useQuery();
 	return (
@@ -34,7 +35,7 @@ function NavRoutes({ login, signup }) {
 				</Route>
 
 				<Route path="/movie">
-					<MoviePage title={query.get("title")}/>
+					<MoviePage movieId={query.get("id")}/>
 				</Route>
 
 				<Route exact path="/search">

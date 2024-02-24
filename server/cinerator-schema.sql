@@ -7,10 +7,20 @@ CREATE TABLE users (
 
 CREATE TABLE comments (
   id SERIAL PRIMARY KEY,
-  user_id INTEGER NOT NULL
-    REFERENCES users.id ON DELETE CASCADE,
-  movie_id INTEGER NOT NULL,
+  user_id INTEGER NOT NULL,
+    -- REFERENCES users.id ON DELETE CASCADE,
+  movie_id CHAR(10) NOT NULL,
+  username VARCHAR(25) NOT NULL,
+    -- REFERENCES users.username ON DELETE CASCADE,
   comment VARCHAR(1000),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE favorites (
+  id SERIAL PRIMARY KEY,
+  user_id INTEGER NOT NULL,
+    -- REFERENCES users.id ON DELETE CASCADE,
+  movie_id CHAR(10) NOT NULL,
   rating INTEGER CHECK (rating >= 1 AND rating <= 5),
-  favorite BOOLEAN NOT NULL DEFAULT FALSE,
+  favorite BOOLEAN NOT NULL DEFAULT FALSE
 );

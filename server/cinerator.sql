@@ -8,7 +8,7 @@ CREATE DATABASE cinerator;
 \i cinerator-schema.sql
 \i cinerator-seed.sql
 
-\echo 'Delete and recreate cinerator_test db?'
+\echo 'Delete and recreate jobly_test db?'
 \prompt 'Return for yes or control-C to cancel > ' foo
 
 DROP DATABASE cinerator_test;

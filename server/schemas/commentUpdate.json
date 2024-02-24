@@ -7,27 +7,23 @@
       "type": "integer"
     },
     "movie_id": {
-      "type": "integer"
+      "type": "string",
+      "limit": 10
+    },
+    "username": {
+      "type": "string",
+      "limit": 25,
+      "default": null
     },
     "comment": {
       "type": "string",
       "limit": 1000,
       "default": null
-    },
-    "rating": {
-      "type": "integer",
-      "range": [1, 5],
-      "default": null
-    },
-    "favorite": {
-      "type": "boolean",
-      "default": false
     }
   },
   "additionalProperties": false,
   "required": [
     "user_id",
-    "movie_id",
-    "favorite"
+    "movie_id"
   ]
 }

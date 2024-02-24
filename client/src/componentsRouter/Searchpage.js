@@ -1,12 +1,11 @@
 import React from 'react';
-import MoviePlaque from '../componentsHelpers/MoviePlaque';
+import SearchPlaque from '../componentsHelpers/SearchPlaque';
 
 function Searchpage({ title }) {
   return (
     <div>
-      <h1>Searchpage</h1>
-      <h2>{title}</h2>
-      <MoviePlaque title={ title } />
+      <h2>Search Results for: "{title}"</h2>
+      <SearchPlaque title={ title } />
     </div>
   );
 }

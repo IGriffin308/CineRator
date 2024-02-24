@@ -1,58 +1,66 @@
 import React, { useState, useEffect } from 'react';
 import RateFav from './RateFav';
 import CineratorApi from "../api/api";
-import testmovie1 from "../testmovie1";
-// import { use } from '../../../server/routes/omdb';
+import Alert from "../common/Alert";
+import LoadingSpinner from "../common/LoadingSpinner";
 
 
-function MoviePlaque({ title }) {
+/** Show movie details in full for movie page*/
+function MoviePlaque({ movieId }) {
   const [isLoading, setIsLoading] = useState(true);
   const [movieArr, setMovieArr] = useState([{}]);
   const [error, setError] = useState(null);
 
+  // Get movie details by movie ID from API, then parse data to an array for easier maping.
   useEffect(() => {
-    async function getMovieByTitle(title) {
+    async function getMovieById(movieId) {
       try {
-        let movie = await CineratorApi.getMovieByTitle(title);
+        let movie = await CineratorApi.getMovieById(movieId);
         let movieArr = Object.values(movie);
-        console.log(movie);
-        console.log(movieArr);
         setMovieArr(movieArr);
         setIsLoading(false);
-        // return movieArr;
       } catch (errors) {
         console.error("get failed", errors);
         setError(errors);
         setIsLoading(false);
-        // return { success: false, errors };
       }
     }
-    getMovieByTitle(title)
-  }, [title]);
+    getMovieById(movieId)
+  }, [movieId]);
 
 
 
   if (isLoading) {
-    return (<p>Loading...</p>);
+    return (<LoadingSpinner />);
   }
   if (error) {
-    return (<p>Something went wrong: {error.message}</p>);
+    return (<Alert type="danger" messages={error} />);
   }
+  if (movieArr === undefined || movieArr.length === 0) {
+    return (
+      <Alert type="danger" messages={["No Movie Found"]} />
+    );
+  }
+
     return (
       <div className="container border border-dark rounded">
         <div className="container">
           <h2>{movieArr[0]}</h2> {/*this is the title*/}
-          <div className="container">
-            <RateFav title={title}/>
-          </div>
           <img 
             src={movieArr[13]}
             onError={({ currentTarget }) => {
               currentTarget.onerror = null; // prevents looping
-              currentTarget.src="https://fakeimg.pl/400x600";
+              currentTarget.src="https://fakeimg.pl/300x500";
             }}
             alt="movie poster"
-            style={{width: "400px", position: "relative", left: "50%", transform: "translateX(-50%)"}}
+            style={{
+              width: "70vw",
+              maxWidth: "300px",
+              height: "auto",
+              position: "relative", 
+              left: "50%", 
+              transform: "translateX(-50%)"
+            }}
           /> {/*this is the poster*/}
           <div 
             className="container border border-dark rounded"

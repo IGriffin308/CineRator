@@ -14,7 +14,7 @@ const commentUpdateSchema = require("../schemas/commentUpdate.json");
 
 const router = express.Router();
 
-router.post("/", ensureAdmin, async function (req, res, next) {
+router.post("/", async function (req, res, next) {
   try {
     const validator = jsonschema.validate(req.body, commentNewSchema);
     if (!validator.valid) {
@@ -23,16 +23,18 @@ router.post("/", ensureAdmin, async function (req, res, next) {
     }
 
     const comment = await Comments.post(req.body);
-    const token = createToken(comment);
+    // const token = createToken(comment);
     console.log("comment", comment);
-    return res.status(201).json({ comment, token });
+    return res.status(201).json({ comment
+      // , token 
+    });
   } catch (err) {
     return next(err);
   }
 }
 );
 
-router.get("/:id", ensureCorrectUserOrAdmin, async function (req, res, next) {
+router.get("/:id", async function (req, res, next) {
   try {
     const comment = await Comments.get(req.params.id);
     return res.json({ comment });
@@ -51,7 +53,7 @@ router.get("/:username", ensureAdmin, async function (req, res, next) {
   }
 });
 
-router.get("/:movieId", ensureAdmin, async function (req, res, next) {
+router.get("/movie/:movieId", async function (req, res, next) {
   try {
     const comments = await Comments.getAllForMovie(req.params.movieId);
     return res.json({ comments });
@@ -86,7 +88,7 @@ router.delete("/:id", ensureCorrectUserOrAdmin, async function (req, res, next) 
 }
 );
 
-router.get("/check/:userId/:movieId", ensureCorrectUserOrAdmin, async function (req, res, next) {
+router.get("/check/:userId/:movieId", async function (req, res, next) {
   try {
     const commentId = await Comments.checkIfCommentExists(req.params.userId, req.params.movieId);
     if (commentId.length === 0) {

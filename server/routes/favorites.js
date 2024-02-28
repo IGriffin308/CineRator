@@ -35,21 +35,17 @@ router.post("/",
   }
 });
 
-router.get("/:userid/:movieid", async function (req, res, next) {
+router.get("/user-movie/:userid/:movieid", async function (req, res, next) {
   try {
     console.log("req.params.userid", req.params.userid, "req.params.movieid", req.params.movieid);
-    const userId = req.params.userid;
-    const movieId = req.params.movieid;
-    console.log("From Routes:", "userId", userId, "movieId", movieId);
-    const favorite = await Favorites.get(userId, movieId);
-    console.log("favorite", favorite);
+    const favorite = await Favorites.get(req.params.userid, req.params.movieid);
     return res.json({ favorite });
   } catch (err) {
     return next(err);
   }
 });
 
-router.get("/:userid", async function (req, res, next) {
+router.get("/user/:userid", async function (req, res, next) {
   try {
     const favorites = await Favorites.getAllForUser(req.params.userid);
     return res.json({ favorites });
@@ -58,8 +54,9 @@ router.get("/:userid", async function (req, res, next) {
   }
 });
 
-router.get("/:movieid", async function (req, res, next) {
+router.get("/movie/:movieid", async function (req, res, next) {
   try {
+    console.log("req.params.movieid", req.params.movieid);
     const favorites = await Favorites.getAllForMovie(req.params.movieid);
     return res.json({ favorites });
   } catch (err) {
@@ -67,7 +64,7 @@ router.get("/:movieid", async function (req, res, next) {
   }
 });
 
-router.patch("/:userid/:movieid",
+router.patch("/user-movie/:userid/:movieid",
 //  ensureCorrectUserOrAdmin,
   async function (req, res, next) {
   try {
@@ -76,15 +73,15 @@ router.patch("/:userid/:movieid",
       const errs = validator.errors.map(e => e.stack);
       throw new BadRequestError(errs);
     }
-
-    const favorite = await Favorites.update(req.params.userid, req.params.movieid, req.body);
+    console.log("req.params.userid", req.params.userid, "req.params.movieid", req.params.movieid, "req.body", req.body);
+    const favorite = await Favorites.update(req.params.userid, req.params.movieid, req.body.rating, req.body.favorite);
     return res.json({ favorite });
   } catch (err) {
     return next(err);
   }
 });
 
-router.delete("/:userid/:movieid", ensureCorrectUserOrAdmin, async function (req, res, next) {
+router.delete("/user-movie/:userid/:movieid", ensureCorrectUserOrAdmin, async function (req, res, next) {
   try {
     await Favorites.remove(req.params.userid, req.params.movieid);
     return res.json({ deleted: `${req.params.userid} ${req.params.movieid}` });

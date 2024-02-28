@@ -11,10 +11,15 @@ const {
     UnauthorizedError,
 } = require("../expressError");
 
+// Switch between reading from .env file or api-key.js file
+const OMDB_API_KEY = require("../api-key");
 // const OMDB_API_KEY = process.env.API_KEY;
-const OMDB_API_KEY = "d4981fd1";
+
+if (!OMDB_API_KEY) {
+    console.log("OMDB_API_KEY not found. Go to www.omdbapi.com to get an API key. Then create a file called api-key.js in the server directory and add the line: module.exports, or add the key to the server/.env file.");
+}
+
 const OMDB_API_URL = `http://www.omdbapi.com/?apikey=${OMDB_API_KEY}&`;
-// const OMDB_IMG_URL = `http://img.omdbapi.com/?apikey=${OMDB_API_KEY}&`;
 
 class Omdb {
     static async getById(id) {

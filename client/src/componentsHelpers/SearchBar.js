@@ -25,7 +25,7 @@ function SearchBar() {
       <form onSubmit={handleSubmit}>
         <input
           type="text"
-          placeholder="Search"
+          placeholder="Search Movies"
           value={search}
           onChange={handleChange}
         />

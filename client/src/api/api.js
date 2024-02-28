@@ -136,6 +136,7 @@ class CineratorApi {
   /** Edit a comment. */
   static async editComment(id, data) {
     let res = await this.request(`comments/${id}`, data, "patch");
+    console.log("sending:", res);
     return res.data;
   }
 
@@ -167,18 +168,19 @@ class CineratorApi {
 
   /** Get all favorites and ratings for a user. */
   static async getFavoritesByUser(userId) {
-    let res = await this.request(`favorites/${userId}`);
+    let res = await this.request(`favorites/user/${userId}`);
     return res.favorites;
   }
 
   /** Get all favorites and ratings for a movie. */
   static async getFavoritesByMovie(movieId) {
-    let res = await this.request(`favorites/${movieId}`);
+    console.log("get fav by movie movieId", movieId.movieId);
+    let res = await this.request(`favorites/movie/${movieId.movieId}`);
     return res.favorites;
   }
 
   static async getFavorite(userId, movieId) {
-    let res = await this.request(`favorites/${userId}/${movieId}`);
+    let res = await this.request(`favorites/user-movie/${userId}/${movieId}`);
     console.log("res.favorite", res.favorite);
     return res.favorite;
   }
@@ -196,13 +198,13 @@ class CineratorApi {
    * This should only occur if the user already has an entry for the movie.
    */
   static async editFavorite(userId, movieId, data) {
-    let res = await this.request(`favorites/${userId}/${movieId}`, data, "patch");
+    let res = await this.request(`favorites/user-movie/${userId}/${movieId}`, data, "patch");
     return res.favorite;
   }
 
   /** Delete a favorite. */
   static async deleteFavorite(userId, movieId) {
-    let res = await this.request(`favorites/${userId}/${movieId}`, {}, "delete");
+    let res = await this.request(`favorites/user-movie/${userId}/${movieId}`, {}, "delete");
     return res;
   }
 

@@ -44,30 +44,38 @@ function SearchPlaque({ title }) {
 	// If search results, show list of movies
 	return (
 		<div className="container border border-dark rounded">
-			{moviesList.map((movie, idx) => (
-				<div className="container" key={idx}>
+			<span className="container d-flex justify-content-evenly align-self-stretch flex-wrap">
+				{moviesList.map((movie, idx) => (
+				<div className="container" key={idx}
+					style={{
+						width:"100%", 
+						maxWidth: "300px", 
+						margin: "10px", 
+						border: "1px solid black", 
+						borderRadius: "10px", 
+						textAlign: "center", 
+						background: "linear-gradient(180deg, rgba(74, 109, 155,1) 50%, rgba(38,54,59,1) 100%)"}}
+				>
 					<Link	
 						to={`/movie?Id=${movie.imdbID}`} 
 						onClick={() => history.push(`/movie?Id=${movie.imdbID}`)}
 					>
-						<h2>{movie.Title}</h2>
+						<h4 style={{height: "3em", textAlignVertical: "center"}}>{movie.Title}</h4>
+						<img 
+							src={movie.Poster} 
+							alt="movie poster" 
+							style={{
+								width: "70vw",
+								maxWidth: "300px", 
+								height: "auto",
+								position: "relative", 
+								left: "50%", 
+								transform: "translateX(-50%)"}}
+						/> {/*this is the poster*/}
 					</Link>
-					{/* <div className="container">
-						<RateFav movieId={movie.imdbID}/>
-					</div> */}
-					<img 
-						src={movie.Poster} 
-						alt="movie poster" 
-						style={{
-							width: "70vw",
-							maxWidth: "300px", 
-							height: "auto",
-							position: "relative", 
-							left: "50%", 
-							transform: "translateX(-50%)"}}
-					/> {/*this is the poster*/}
 				</div>
-			))}
+				))}
+			</span>
 		</div>
 	);
 };

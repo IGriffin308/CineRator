@@ -10,7 +10,7 @@
       "type": "string"
     },
     "rating": {
-      "type": "integer",
+      "type": ["integer", "null"],
       "range": [1, 5],
       "default": null
     },

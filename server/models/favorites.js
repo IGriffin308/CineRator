@@ -13,10 +13,10 @@ const { BCRYPT_WORK_FACTOR } = require("../config.js");
 class Favorites {
 
     static async post({
-        user_id,
-        movie_id,
-        rating = null,
-        favorite = false
+      user_id, 
+      movie_id, 
+      rating = null, 
+      favorite = false
     }) {
         const duplicateCheck = await db.query(
             `SELECT user_id, movie_id
@@ -46,11 +46,7 @@ class Favorites {
         return favoriteData;
     }
     
-    static async get({
-        user_id,
-        movie_id
-    }) {
-        console.log("From Models:", "user_id", user_id, "movie_id", movie_id);
+    static async get(user_id, movie_id) {
         const favoritesRes = await db.query(
         `SELECT *
              FROM favorites
@@ -59,8 +55,6 @@ class Favorites {
         );
         
         const favorites = favoritesRes.rows;
-        console.log("favoritesRes from models", favoritesRes);
-        console.log("favorites from models", favorites);
         
         if (!favorites) throw new NotFoundError(`No Entry for user: ${user_id}`);
         return favorites;
@@ -94,12 +88,12 @@ class Favorites {
         return favorites;
     }
 
-    static async update({
+    static async update(
         user_id, 
         movie_id, 
         rating, 
         favorite
-    }) {
+    ) {
         const result = await db.query(
         `UPDATE favorites
             SET rating = $3, favorite = $4

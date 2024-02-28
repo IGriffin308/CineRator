@@ -34,13 +34,14 @@ function CommentAdd({ movieId }) {
       <h3>Add Comment</h3>
       <div className="container">
         <form onSubmit={handleSubmit}>
-          <label>
+          <label style={{width: "100%"}}>
             <textarea 
               name="comment" 
-              cols="36" 
+              // cols="36" 
               rows="5" 
               maxlength="500"
               placeholder="Add Comment" 
+              style={{width: "100%", padding: "10px"}}
               value={comment} 
               onChange={handleChange} />
           </label>

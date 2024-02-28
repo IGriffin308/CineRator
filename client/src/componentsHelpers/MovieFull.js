@@ -17,7 +17,7 @@ function useQuery() {
 
 
 /** Show full movie details and comments 
- * if user is logged in, show comment form, else show comments only
+ * if user is logged in, show comment and rating forms, else show comments only
 */
 function MovieFull() {
   const { currentUser } = useContext(UserContext);
@@ -25,12 +25,12 @@ function MovieFull() {
   let query = useQuery();
   let movieId = query.get("Id");
 
-  // If user is logged in, show comment form
+  // If user is logged in, show comment form and rating form
   function loggedInPage() {
     return (
       <div className="container">
-        <MoviePlaque movieId={ movieId }/>
         <RateFav movieId={ movieId }/>
+        <MoviePlaque movieId={ movieId }/>
         <div className="container border border-dark rounded">
           <CommentAdd movieId={ movieId }/>
           <CommentsShow movieId={ movieId }/>

@@ -40,14 +40,17 @@ function CommentsShow({ movieId }) {
       <h3>Comments</h3>
         <div>
             {comments.map((comment) => (
-            <div 
-							key={comment.id} 
-							className="container border border-dark rounded"
-							style={{margin: '10px', padding: '10px', background: 'rgba(255,255,255,0.5)'}}
-						>
-								<h4>{comment.username}</h4>
-                <p>{comment.comment}</p>
-            </div>
+              <div>
+                <div 
+						    	key={comment.id} 
+						    	className="container border border-dark rounded"
+						    	style={{margin: '10px, 20px, 10px, 10px', padding: '10px', background: 'rgba(255,255,255,0.5)'}}
+						    >
+						    		<h4>{comment.username}</h4>
+                    <p>{comment.comment}</p>
+                </div>
+                <br />
+              </div>
             ))}
 				</div>
     </div>

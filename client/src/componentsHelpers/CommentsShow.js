@@ -46,8 +46,16 @@ function CommentsShow({ movieId }) {
 						    	className="container border border-dark rounded"
 						    	style={{margin: '10px, 20px, 10px, 10px', padding: '10px', background: 'rgba(255,255,255,0.5)'}}
 						    >
-						    		<h4>{comment.username}</h4>
-                    <p>{comment.comment}</p>
+                  <div className="container row">
+                    <img src="https://static.vecteezy.com/system/resources/thumbnails/004/511/281/small/default-avatar-photo-placeholder-profile-picture-vector.jpg"
+                      alt="profile" 
+                      style={{width: '60px', height: '35px', borderRadius: '50%'}}
+                      className="custom-avatar"
+                    ></img>
+						    		<h4 className="col">{comment.username}</h4>
+                  </div>
+                  <hr/>
+                  <p>{comment.comment}</p>
                 </div>
                 <br />
               </div>

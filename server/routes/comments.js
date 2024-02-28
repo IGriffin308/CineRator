@@ -44,6 +44,9 @@ router.get("/:id", async function (req, res, next) {
 }
 );
 
+/** This route is not currently utilized.
+ * It will be ustilized in the future for userpages as well as admin purposes.
+ */
 router.get("/:username", ensureAdmin, async function (req, res, next) {
   try {
     const comments = await Comments.getAllForUser(req.params.username);
@@ -62,6 +65,10 @@ router.get("/movie/:movieId", async function (req, res, next) {
   }
 });
 
+
+/** This route is not currently utilized.
+ * It will be ustilized in the future to allow users to edit their comments.
+ */
 router.patch("/:id", ensureCorrectUserOrAdmin, async function (req, res, next) {
   try {
     const validator = jsonschema.validate(req.body, commentUpdateSchema);

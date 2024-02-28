@@ -17,69 +17,17 @@ function NavBar({ logout }) {
   const { currentUser } = useContext(UserContext);
   console.debug("Navigation", "currentUser=", currentUser);
   
-  // If user is logged in, show links to userpage and logout routes
-  // function loggedInNav() {
-  //   return (
-  //     <div className="container-fluid">
-  //       <nav 
-  //         className="navbar navbar-expand-lg navbar-dark fixed-top" 
-  //         style={{background: 'linear-gradient(180deg, rgba(74, 109, 155,1) 50%, rgba(38,54,59,1) 100%)'}}
-  //       >
-  //         <span className="custom-logo">
-  //           <NavLink to="/">CineRator</NavLink>
-  //         </span>
-  //         {/* <div className="nav-item dropdown">
-  //           <a className="navlink dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-  //           Dropdown  
-  //           </a>
-  //           <div className="dropdown-menu" aria-labelledby="navbarDropdown"> 
-  //             <a className="dropdown-item" href="#">
-  //               <SearchBar />
-  //             </a>
-  //             <div className="dropdown-divider"></div>
-  //             <a className="dropdown-item" href="#">
-  //               <NavLink to="/userpage">User Page</NavLink>
-  //             </a>
-  //             <a className="dropdown-item" href="#">
-  //               <Link to="/" onClick={logout}>
-  //                 Log out
-  //               </Link>
-  //             </a>
-  //           </div>
-  //          */}
-  //         <ul className="nav-item list-group list-group-horizontal ">
-  //           <li className="list-group-item">
-  //             <SearchBar />
-  //           </li>
-  //           <li className="list-group-item">
-  //             <NavLink to="/userpage">User Page</NavLink>
-  //           </li>
-  //           <li className="list-group-item">
-  //             <Link to="/" onClick={logout}>
-  //               Log out
-  //             </Link>
-  //           </li>
-  //         </ul>
-
-  //       </nav>
-  //     </div>
-  //   );
-  // }
 
   function loggedInNav() {
     return (
-    // <nav 
-    //   className="navbar navbar-expand-lg navbar-dark fixed-top" 
-    //   style={{background: 'linear-gradient(180deg, rgba(74, 109, 155,1) 50%, rgba(38,54,59,1) 100%)'}}
-    // >
       <Navbar expand="lg" fixed="top" 
         style={{background: 'linear-gradient(180deg, rgba(74, 109, 155,1) 50%, rgba(38,54,59,1) 100%)'}}
       >
         <Navbar.Brand className="custom-logo">
           <NavLink to="/">
-            <span style={{ 
-              color: '#ffc700', fontSize: "30px"
-            }}>★</span>
+            <span style={{color: '#ffc700', fontSize: "30px"}}>
+              ★
+            </span>
             CineRator
           </NavLink>
         </Navbar.Brand>
@@ -87,25 +35,27 @@ function NavBar({ logout }) {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto" style={{marginLeft: 'auto'}}>
             <Dropdown as={Nav.Item}>
-              <Dropdown.Toggle as={Nav.Link} 
-                style={{border: 'solid 2px', borderRadius: '5px', padding: '5px', background: 'rgba(255,255,255,0.5)'}}
-              >User Menu</Dropdown.Toggle>
-              <Dropdown.Menu>
+              <Dropdown.Toggle as={Nav.Link} className="custom-box">
+                  User Menu
+              </Dropdown.Toggle>
+              <Dropdown.Menu style={{background:"rgb(84, 112, 149)"}}>
                 {/* <Dropdown.Item> */}
-                  <Nav.Item>
-                    <NavLink to="/userpage">User Page</NavLink>
+                  <Nav.Item className="custom-box">
+                    <NavLink to="/userpage" className="custom-link">
+                      User Page
+                    </NavLink>
                   </Nav.Item>
                 {/* </Dropdown.Item> */}
                 {/* <Dropdown.Item> */}
-                  <Nav.Item>
-                    <Link to="/" onClick={logout}>
+                  <Nav.Item className="custom-box">
+                    <Link to="/" onClick={logout} className="custom-link">
                       Log out
                     </Link>
                   </Nav.Item>
                 {/* </Dropdown.Item> */}
               </Dropdown.Menu>
             </Dropdown>
-            <Nav.Item style={{ border: 'solid 2px', borderRadius: '5px', padding: '1px', paddingTop: '3px', background: 'rgba(255,255,255,0.5)' }}>
+            <Nav.Item className="custom-box custom-search">
               <SearchBar />
             </Nav.Item>
           </Nav>
@@ -119,13 +69,13 @@ function NavBar({ logout }) {
   function loggedOutNav() {
     return (
       <Navbar expand="lg" fixed="top" 
-      style={{background: 'linear-gradient(180deg, rgba(74, 109, 155,1) 50%, rgba(38,54,59,1) 100%)'}}
+        style={{background: 'linear-gradient(180deg, rgba(74, 109, 155,1) 50%, rgba(38,54,59,1) 100%)'}}
       >
       <Navbar.Brand className="custom-logo">
         <NavLink to="/">
-          <span style={{ 
-            color: '#ffc700', fontSize: "30px"
-          }}>★</span>
+          <span style={{color: '#ffc700', fontSize: "30px"}}>
+            ★
+          </span>
           CineRator
         </NavLink>
       </Navbar.Brand>
@@ -133,50 +83,32 @@ function NavBar({ logout }) {
       <Navbar.Collapse id="basic-navbar-nav">
         <Nav className="mr-auto" style={{marginLeft: 'auto'}}>
           <Dropdown as={Nav.Item}>
-            <Dropdown.Toggle as={Nav.Link} 
-              style={{border: 'solid 2px', borderRadius: '5px', padding: '5px', background: 'rgba(255,255,255,0.5)'}}
-            >User Menu</Dropdown.Toggle>
+            <Dropdown.Toggle as={Nav.Link} className="custom-box">
+              User Menu
+            </Dropdown.Toggle>
             <Dropdown.Menu>
               {/* <Dropdown.Item> */}
-                <Nav.Item>
-                  <NavLink to="/login">Log In</NavLink>
+                <Nav.Item className="custom-box">
+                  <NavLink to="/login" className="custom-link">
+                    Log In
+                  </NavLink>
                 </Nav.Item>
               {/* </Dropdown.Item> */}
               {/* <Dropdown.Item> */}
-                <Nav.Item>
-                  <NavLink to="/signup">Sign Up</NavLink>
+                <Nav.Item className="custom-box">
+                  <NavLink to="/signup" className="custom-link">
+                    Sign Up
+                  </NavLink>
                 </Nav.Item>
               {/* </Dropdown.Item> */}
             </Dropdown.Menu>
           </Dropdown>
-          <Nav.Item style={{ border: 'solid 2px', borderRadius: '5px', padding: '1px', paddingTop: '3px', background: 'rgba(255,255,255,0.5)' }}>
+          <Nav.Item className="custom-box custom-search">
             <SearchBar />
           </Nav.Item>
         </Nav>
       </Navbar.Collapse>
     </Navbar>
-      // <div className="container-fluid">
-      //   <nav 
-      //     className="navbar navbar-expand-lg navbar-dark fixed-top" 
-      //     style={{background: 'linear-gradient(180deg, rgba(74, 109, 155,1) 50%, rgba(38,54,59,1) 100%)'}}
-      //   >
-      //     <span className="custom-logo">
-      //       <NavLink to="/">CineRator</NavLink>
-      //     </span>
-      //     <ul className="navbar-nav mr-auto mt-2 mt-lg-0 list-group list-group-horizontal">
-      //       <li className="list-group-item">
-      //         <SearchBar />
-      //       </li>
-      //       <li className="list-group-item">
-      //         <NavLink to="/login">Login</NavLink>
-      //       </li>
-      //       <li className="list-group-item">
-      //         <NavLink to="/signup">Sign Up</NavLink>
-      //       </li>
-      //     </ul>
-      //   </nav>
-      // </div>
-
     );
   }
 

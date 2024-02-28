@@ -5,7 +5,6 @@ import { BrowserRouter } from "react-router-dom";
 import useLocalStorage from "./hooks/useLocalStorage";
 import NavRoutes from './componentsMain/NavRoutes'
 import NavBar from "./componentsMain/NavBar";
-import FullPage from "./componentsMain/FullPage";
 import LoadingSpinner from "./common/LoadingSpinner";
 import CineratorApi from "./api/api";
 import UserContext from "./auth/UserContext";
@@ -122,7 +121,6 @@ function App() {
             value={{ currentUser, setCurrentUser }}>
         <div className="App">
           <NavBar logout={ logout }/>
-          <FullPage />
           <NavRoutes login={login} signup={signup} />
         </div>
       </UserContext.Provider>

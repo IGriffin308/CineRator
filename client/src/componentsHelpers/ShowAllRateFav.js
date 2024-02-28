@@ -54,8 +54,8 @@ function ShowAllRateFav( movieId ) {
         ratingTotal++;
       }
     });
-    if (ratingTotal === 0) {
-      setAverageRating("No Ratings Yet");
+    if (!ratingTotal) {
+      setAverageRating(0);
     } else {
       const ratingAverage = Math.round(10 * ratingSum / ratingTotal) / 10;
       setAverageRating(ratingAverage);

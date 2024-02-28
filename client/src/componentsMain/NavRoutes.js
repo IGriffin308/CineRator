@@ -6,7 +6,6 @@ import SignupPage from '../componentsRouter/SignupPage';
 import MoviePage from '../componentsRouter/MoviePage';
 import Searchpage from '../componentsRouter/Searchpage';
 import UserPage from '../componentsRouter/UserPage';
-import "./NavRoutes.css"
 
 // Custom hook to get query params from URL
 function useQuery() {

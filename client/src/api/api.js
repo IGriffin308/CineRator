@@ -60,6 +60,7 @@ class CineratorApi {
     return res.user;
   }
 
+
 /** ---------------------- */
   /** Movies section */
 
@@ -80,18 +81,6 @@ class CineratorApi {
     }
   }
 
-  // static async getMovieByTitle(title) {
-  //   if (sessionStorage.getItem(title)) {
-  //     console.log("movie loaded by title from session storage");
-  //     return JSON.parse(sessionStorage.getItem(title));
-  //   } else {
-  //     let res = await this.request(`omdb/title/${title}`);
-  //     sessionStorage.setItem(title, JSON.stringify(res.omdbRes));
-  //     console.log("movie loaded by title from from api");
-  //     return res.omdbRes;
-  //   }
-  // }
-
   /** Get list of movies by search term.
    * Use session storage to store and retrieve list of results.
    * If result is not in session storage, get it from the API.
@@ -108,12 +97,6 @@ class CineratorApi {
       return res.omdbRes;
     }
   }
-
-  // static async getLoremIpsum() {
-  //   let res = await this.request(`omdb/lorem`);
-  //   console.log(res);
-  //   return res.omdbRes;
-  // }
 
 
   /** ---------------------- */
@@ -146,19 +129,6 @@ class CineratorApi {
     return res;
   }
 
-  /** Check if comment exists. */
-  static async checkIfCommentExists(userId, movieId) {
-    let res = await this.request(`comments/${userId}/${movieId}`);
-    try {
-      if (res.exists === false) {
-        return false;
-      }
-      return res;
-    } catch (err) {
-      console.log("error:", err);
-    }
-  }
-
 
   /** ---------------------- */
   /** Favorites section
@@ -166,7 +136,11 @@ class CineratorApi {
    * Each user can only have one favorite and rating value per movie.
    */
 
-  /** Get all favorites and ratings for a user. */
+  /** Get all favorites and ratings for a user.
+   * This route is not yet used in the app.
+   * It will be used to fill out the user profile page.
+   * It may also be used for admin purposes.
+   */
   static async getFavoritesByUser(userId) {
     let res = await this.request(`favorites/user/${userId}`);
     return res.favorites;
@@ -179,6 +153,9 @@ class CineratorApi {
     return res.favorites;
   }
 
+  /** Get favorite and rating for a specific user on a specific movie. 
+   * This is used to determine if a user has already favorited a movie.
+  */
   static async getFavorite(userId, movieId) {
     let res = await this.request(`favorites/user-movie/${userId}/${movieId}`);
     console.log("res.favorite", res.favorite);
@@ -202,26 +179,15 @@ class CineratorApi {
     return res.favorite;
   }
 
-  /** Delete a favorite. */
+  /** Delete a favorite. 
+   * This is not implemented in the app.
+   * It may be used for admin purposes.
+  */
   static async deleteFavorite(userId, movieId) {
     let res = await this.request(`favorites/user-movie/${userId}/${movieId}`, {}, "delete");
     return res;
   }
 
-  /** Check if favorite exists.
-   * This may be useful in determine if a user already has an entry a movie.
-   */
-  static async checkIfFavoriteExists(userId, movieId) {
-    let res = await this.request(`favorites/check/${userId}/${movieId}`);
-    try {
-      if (res.exists === false) {
-        return false;
-      }
-      return res;
-    } catch (err) {
-      console.log("error:", err);
-    }
-  }
 }
 
 export default CineratorApi;

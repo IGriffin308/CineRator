@@ -22,14 +22,16 @@ function SearchBar() {
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} style={{height: "38px"}}>
         <input
           type="text"
           placeholder="Search Movies"
           value={search}
           onChange={handleChange}
+          className="search-bar"
+          style={{marginTop: '5px'}}
         />
-        <button type="submit">Search</button>
+        <button type="submit" className="btn" style={{transform: "translateY(-2px)"}}>Search</button>
       </form>
     </div>
   );

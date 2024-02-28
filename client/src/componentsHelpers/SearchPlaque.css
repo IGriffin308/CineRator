@@ -1,0 +1,25 @@
+.custom-title {
+    height: 3.2em;
+    color: black;
+    text-decoration: none;
+}
+
+.custom-poster {
+    width: 70vw;
+	max-width: 300px;
+    height: auto;
+	position: relative;
+	left: 50%;
+	transform: translateX(-50%);
+    border-radius: 10px;
+}
+
+.custom-container {
+    width: 100%; 
+    max-width: 300px; 
+    margin: 10px;
+    border: 1px solid black; 
+    border-radius: 10px;
+    text-align: center; 
+    background: linear-gradient(180deg, rgba(74, 109, 155,1) 50%, rgba(38,54,59,1) 100%)
+}

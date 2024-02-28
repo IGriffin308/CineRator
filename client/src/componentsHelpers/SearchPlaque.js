@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import RateFav from './RateFav';
 import CineratorApi from "../api/api";
 import { Link, useHistory } from 'react-router-dom';
 import Alert from "../common/Alert";
 import LoadingSpinner from "../common/LoadingSpinner";
+import "./SearchPlaque.css";
+import ShowAllRateFav from "./ShowAllRateFav";
 
 // Show short version of movie details in a list for search page
 function SearchPlaque({ title }) {
@@ -46,31 +47,19 @@ function SearchPlaque({ title }) {
 		<div className="container border border-dark rounded">
 			<span className="container d-flex justify-content-evenly align-self-stretch flex-wrap">
 				{moviesList.map((movie, idx) => (
-				<div className="container" key={idx}
-					style={{
-						width:"100%", 
-						maxWidth: "300px", 
-						margin: "10px", 
-						border: "1px solid black", 
-						borderRadius: "10px", 
-						textAlign: "center", 
-						background: "linear-gradient(180deg, rgba(74, 109, 155,1) 50%, rgba(38,54,59,1) 100%)"}}
-				>
+				<div className="container custom-container" key={idx}>
+					<ShowAllRateFav movieId={movie.imdbID} />
 					<Link	
 						to={`/movie?Id=${movie.imdbID}`} 
 						onClick={() => history.push(`/movie?Id=${movie.imdbID}`)}
 					>
-						<h4 style={{height: "3em", textAlignVertical: "center"}}>{movie.Title}</h4>
+						<h4 className="custom-title">
+							{movie.Title}
+						</h4>
 						<img 
 							src={movie.Poster} 
 							alt="movie poster" 
-							style={{
-								width: "70vw",
-								maxWidth: "300px", 
-								height: "auto",
-								position: "relative", 
-								left: "50%", 
-								transform: "translateX(-50%)"}}
+							className="custom-poster"
 						/> {/*this is the poster*/}
 					</Link>
 				</div>
